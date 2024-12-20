@@ -29,4 +29,12 @@ class MainTest {
     Assertions.assertEquals(183, Main.add("17, 19, 23, 27, 29, 31, 37"));
     Assertions.assertEquals(1899, Main.add("183, 159, 263, 237, 289, 391, 377"));
   }
+  @Test
+  void addTestSeriesOfNumbersAllowDelimeterChange(){
+    Assertions.assertEquals(0, Main.add("//;\n"));
+    Assertions.assertEquals(17, Main.add("//;\n17"));
+    Assertions.assertEquals(55, Main.add("//;\n1;2;3;4;5;6;7;8;9;10"));
+    Assertions.assertEquals(75, Main.add("//:\n5:10:15:20:25"));
+    Assertions.assertEquals(1899, Main.add("//!\n183!159!263!237!289!391!377"));
+  }
 }
