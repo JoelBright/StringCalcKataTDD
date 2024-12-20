@@ -15,10 +15,14 @@ public class Main {
 
   static int add(String numbers) {
     AtomicInteger sum = new AtomicInteger();
-    if(numbers.contains(",")) {
+    if(numbers.isEmpty()){
+      return 0;
+    } else if(numbers.contains(",") || numbers.contains("\n")) {
       List<Integer> nums =
-          Arrays.stream(numbers.split(",")).map(s -> Integer.parseInt(s.trim())).toList();
+          Arrays.stream(numbers.split("[,\n]")).map(s -> Integer.parseInt(s.trim())).toList();
       nums.forEach(sum::addAndGet);
+    } else {
+      sum.getAndAdd(Integer.parseInt(numbers));
     }
 
     return sum.get();

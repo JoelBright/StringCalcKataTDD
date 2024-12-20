@@ -22,4 +22,11 @@ class MainTest {
     Assertions.assertEquals(183, Main.add("17, 19, 23, 27, 29, 31, 37"));
     Assertions.assertEquals(1899, Main.add("183, 159, 263, 237, 289, 391, 377"));
   }
+  @Test
+  void addTestSeriesOfNumbersUsingNewlineAlso(){
+    Assertions.assertEquals(55, Main.add("1\n2, 3\n4, 5, 6, 7, 8\n9, 10"));
+    Assertions.assertEquals(75, Main.add("5\n10\n15\n20\n25"));
+    Assertions.assertEquals(183, Main.add("17, 19, 23, 27, 29, 31, 37"));
+    Assertions.assertEquals(1899, Main.add("183, 159, 263, 237, 289, 391, 377"));
+  }
 }
