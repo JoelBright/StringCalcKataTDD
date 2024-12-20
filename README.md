@@ -14,7 +14,7 @@ Input: `“1”`, Output: `1`
 Input: `“1,5”`, Output: `6`
 Allow the add method to handle any amount of numbers.
 
-Allow the add method to handle new lines between numbers (instead of commas). ("1\n2,3" should return 6)
+Allow the add method to handle new lines between numbers (instead of commas). (`"1\n2,3"` should return `6`)
 
 **Support different delimiters:**
 
