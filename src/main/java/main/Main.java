@@ -15,14 +15,20 @@ public class Main {
 
   static int add(String numbers) {
     AtomicInteger sum = new AtomicInteger();
-    if(numbers.isEmpty()){
+    String delimiterRegex = "[,\n]";
+    int beginIndex = 0;
+    if(numbers.contains("//")){
+      delimiterRegex = numbers.charAt(2)+"";
+      beginIndex = 4;
+    }
+    if(numbers.isEmpty() || beginIndex >= numbers.length()) {
       return 0;
-    } else if(numbers.contains(",") || numbers.contains("\n")) {
+    } else if(numbers.contains(delimiterRegex) || numbers.contains(",") || numbers.contains("\n")) {
       List<Integer> nums =
-          Arrays.stream(numbers.split("[,\n]")).map(s -> Integer.parseInt(s.trim())).toList();
+          Arrays.stream(numbers.substring(beginIndex).split(delimiterRegex)).map(s -> Integer.parseInt(s.trim())).toList();
       nums.forEach(sum::addAndGet);
     } else {
-      sum.getAndAdd(Integer.parseInt(numbers));
+      sum.getAndAdd(Integer.parseInt(numbers.substring(beginIndex)));
     }
 
     return sum.get();
