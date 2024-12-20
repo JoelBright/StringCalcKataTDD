@@ -3,6 +3,8 @@ package main;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class MainTest {
   @Test
@@ -36,5 +38,19 @@ class MainTest {
     Assertions.assertEquals(55, Main.add("//;\n1;2;3;4;5;6;7;8;9;10"));
     Assertions.assertEquals(75, Main.add("//:\n5:10:15:20:25"));
     Assertions.assertEquals(1899, Main.add("//!\n183!159!263!237!289!391!377"));
+  }
+  @Test
+  void addTestNegativesNotAllowed(){
+    NoNegativesException e1 = assertThrows(NoNegativesException.class,
+        () -> Main.add("-5"));
+    assertEquals("Numbers not allowed, numbers:-5", e1.getMessage());
+
+    NoNegativesException e2 = assertThrows(NoNegativesException.class,
+        () -> Main.add("-5,6, 8, -7, 15,74, 6"), "Numbers not allowed, numbers:-5, -7");
+    assertEquals("Numbers not allowed, numbers:-5, -7", e2.getMessage());
+
+    NoNegativesException e3 = assertThrows(NoNegativesException.class,
+        () -> Main.add("-25, -7, 41, -541, -98"));
+    assertEquals("Numbers not allowed, numbers:-25, -7, -541, -98", e3.getMessage());
   }
 }
