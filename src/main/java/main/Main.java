@@ -9,7 +9,7 @@ public class Main {
     System.out.println(answer);
   }
 
-  private static int add(String numbers) {
+  static int add(String numbers) {
     if(numbers.isEmpty())
       return 0;
     else {
