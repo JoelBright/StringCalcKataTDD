@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
   public static void main(String[] args) {
-    String numbers = "-25, -7, 41, -541, -98";
+    String numbers = "//[xo*xo]\n1xo*xo2xo*xo3";
     int answer = add(numbers);
     System.out.println(answer);
   }
@@ -22,16 +22,23 @@ public class Main {
     List<Integer> negatives = new ArrayList<>();
 
     if(numbers.contains("//")){
-      delimiterRegex = numbers.charAt(2)+"";
-      beginIndex = 4;
+      beginIndex = numbers.indexOf('\n') + 1;
+      if(numbers.contains("[")){
+        int delimiterStart = numbers.indexOf('[');
+        int delimiterEnd = numbers.lastIndexOf(']');
+        String delims = numbers.substring(delimiterStart+1, delimiterEnd).replace("][", "|");
+        delimiterRegex = delims.replace("[", "").replace("]", "");
+      }else {
+        delimiterRegex = numbers.substring(2, beginIndex-1);
+      }
     }
-    if(numbers.isEmpty() || beginIndex >= numbers.length()) {
+    if(numbers.isEmpty() || numbers.substring(beginIndex).isEmpty()) {
       return 0;
     } else if(numbers.contains(delimiterRegex) || numbers.contains(",") || numbers.contains("\n")) {
       List<Integer> nums =
           Arrays.stream(numbers.substring(beginIndex).split(delimiterRegex)).map(s -> Integer.parseInt(s.trim())).toList();
-      nums.forEach(i -> {
-        if (i < 0) {
+      nums.stream().filter(i -> i <= 1000).forEach(i -> {
+        if(i < 0) {
           negatives.add(i);
         } else {
           sum.getAndAdd(i);
