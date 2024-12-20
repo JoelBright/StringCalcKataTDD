@@ -1,22 +1,26 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
   public static void main(String[] args) {
-    String numbers = "";
+    String numbers = "-25, -7, 41, -541, -98";
     int answer = add(numbers);
     System.out.println(answer);
   }
 
-  static int add(String numbers) {
+  static int add(String numbers) throws NoNegativesException{
     AtomicInteger sum = new AtomicInteger();
     String delimiterRegex = "[,\n]";
     int beginIndex = 0;
+    List<Integer> negatives = new ArrayList<>();
+
     if(numbers.contains("//")){
       delimiterRegex = numbers.charAt(2)+"";
       beginIndex = 4;
@@ -26,11 +30,28 @@ public class Main {
     } else if(numbers.contains(delimiterRegex) || numbers.contains(",") || numbers.contains("\n")) {
       List<Integer> nums =
           Arrays.stream(numbers.substring(beginIndex).split(delimiterRegex)).map(s -> Integer.parseInt(s.trim())).toList();
-      nums.forEach(sum::addAndGet);
+      nums.forEach(i -> {
+        if (i < 0) {
+          negatives.add(i);
+        } else {
+          sum.getAndAdd(i);
+        }
+      });
     } else {
-      sum.getAndAdd(Integer.parseInt(numbers.substring(beginIndex)));
+      int i = Integer.parseInt(numbers.substring(beginIndex));
+      if (i < 0) {
+        negatives.add(i);
+      } else {
+        sum.getAndAdd(i);
+      }
     }
 
-    return sum.get();
+    if (negatives.isEmpty()) {
+      return sum.get();
+    } else {
+      String exceptionMessage = String.format("Numbers not allowed, numbers:%s",
+          negatives.stream().map(Object::toString).collect(Collectors.joining(", ")));
+      throw new NoNegativesException(exceptionMessage);
+    }
   }
 }
