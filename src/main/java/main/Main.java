@@ -10,10 +10,8 @@ public class Main {
   }
 
   static int add(String numbers) {
-    if(numbers.isEmpty())
-      return 0;
-    else {
-      return 1;
-    }
+    int sum = 0;
+    sum += Integer.parseInt(numbers);
+    return sum;
   }
 }
