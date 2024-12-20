@@ -1,5 +1,9 @@
 package main;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -10,8 +14,13 @@ public class Main {
   }
 
   static int add(String numbers) {
-    int sum = 0;
-    sum += Integer.parseInt(numbers);
-    return sum;
+    AtomicInteger sum = new AtomicInteger();
+    if(numbers.contains(",")) {
+      List<Integer> nums =
+          Arrays.stream(numbers.split(",")).map(s -> Integer.parseInt(s.trim())).toList();
+      nums.forEach(sum::addAndGet);
+    }
+
+    return sum.get();
   }
 }
