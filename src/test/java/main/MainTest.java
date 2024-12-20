@@ -53,4 +53,11 @@ class MainTest {
         () -> Main.add("-25, -7, 41, -541, -98"));
     assertEquals("Numbers not allowed, numbers:-25, -7, -541, -98", e3.getMessage());
   }
+  @Test
+  void addTestIgnoreNumbersGreaterThanThousand(){
+    Assertions.assertEquals(41, Main.add("1, 2000, 3, 4000, 5, 6, 7, 8000, 9, 10"));
+    Assertions.assertEquals(1050, Main.add("5, 1000, 1500, 20, 25"));
+    Assertions.assertEquals(100, Main.add("17, 19, 2003, 27, 2009, 3001, 37"));
+    Assertions.assertEquals(1610, Main.add("183, 159, 263, 237, 2809, 391, 377"));
+  }
 }

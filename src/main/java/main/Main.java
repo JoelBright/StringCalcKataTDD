@@ -30,8 +30,8 @@ public class Main {
     } else if(numbers.contains(delimiterRegex) || numbers.contains(",") || numbers.contains("\n")) {
       List<Integer> nums =
           Arrays.stream(numbers.substring(beginIndex).split(delimiterRegex)).map(s -> Integer.parseInt(s.trim())).toList();
-      nums.forEach(i -> {
-        if (i < 0) {
+      nums.stream().filter(i -> i <= 1000).forEach(i -> {
+        if(i < 0) {
           negatives.add(i);
         } else {
           sum.getAndAdd(i);
